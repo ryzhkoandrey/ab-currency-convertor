@@ -3,7 +3,8 @@ import { Block } from './Block';
 import './index.scss';
 
 function App() {
-   const [fromCurrency, setFromCurrency] = React.useState('RUB');
+   const [fromCurrency, setFromCurrency] = React.useState('USD');
+   const [toCurrency, setToCurrency] = React.useState('EUR');
    const [rates, setRates] = React.useState({});
 
    React.useEffect(() => {
@@ -18,16 +19,17 @@ function App() {
          });
    }, []);
 
-   console.log(rates);
+   // console.log(rates);
 
    return (
       <div className="App">
          <Block
             value={0}
-            currency="USD"
-            onChangeCurrency={(cur) => console.log(cur)}
+            currency={fromCurrency}
+            onChangeCurrency={setFromCurrency}
          />
-         <Block value={0} currency="EUR" />
+
+         <Block value={0} currency={toCurrency} onChangeCurrency={setToCurrency} />
       </div>
    );
 }
