@@ -6,7 +6,7 @@ function App() {
    const [rates, setRates] = React.useState({});
 
    React.useEffect(() => {
-      fetch('https://api.frankfurter.dev/v1/latest?base=USD')
+      fetch('https://api.frankfurter.app/latest?base=USD')
          .then((res) => res.json())
          .then((json) => {
             setRates(json.rates);
