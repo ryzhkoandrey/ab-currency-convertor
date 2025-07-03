@@ -26,14 +26,11 @@ function App() {
       const result = price * rates[toCurrency];
       setToPirce(result);
       setFromPirce(value);
-
-      console.log('value', value);
-      console.log('rates', rates[fromCurrency]);
-      console.log('price', price);
-      console.log('result', result);
    };
 
    const onChangeToPrice = (value) => {
+      const result = (rates[fromCurrency] / rates[toCurrency]) * value;
+      setFromPirce(result);
       setToPirce(value);
    };
 
