@@ -3,7 +3,7 @@ import { Block } from './Block';
 import './index.scss';
 
 function App() {
-   const [fromCurrency, setFromCurrency] = React.useState('USD');
+   const [fromCurrency, setFromCurrency] = React.useState('AUD');
    const [toCurrency, setToCurrency] = React.useState('EUR');
    const [rates, setRates] = React.useState({});
    const [fromPrice, setFromPirce] = React.useState(0);
@@ -22,7 +22,15 @@ function App() {
    }, []);
 
    const onChangeFromPrice = (value) => {
+      const price = value / rates[fromCurrency];
+      const result = price * rates[toCurrency];
+      setToPirce(result);
       setFromPirce(value);
+
+      console.log('value', value);
+      console.log('rates', rates[fromCurrency]);
+      console.log('price', price);
+      console.log('result', result);
    };
 
    const onChangeToPrice = (value) => {
