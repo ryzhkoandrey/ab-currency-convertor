@@ -5,15 +5,17 @@ import './index.scss';
 function App() {
    const [fromCurrency, setFromCurrency] = React.useState('AUD');
    const [toCurrency, setToCurrency] = React.useState('EUR');
-   const [rates, setRates] = React.useState({});
    const [fromPrice, setFromPirce] = React.useState(0);
    const [toPrice, setToPirce] = React.useState(1);
+
+   const ratesRef = React.useRef({});
 
    React.useEffect(() => {
       fetch('https://api.frankfurter.app/latest?base=USD')
          .then((res) => res.json())
          .then((json) => {
-            setRates(json.rates);
+            ratesRef.current = json.rates;
+            onChangeToPrice(1);
          })
          .catch((err) => {
             console.warn(err);
@@ -22,15 +24,16 @@ function App() {
    }, []);
 
    const onChangeFromPrice = (value) => {
-      const price = value / rates[fromCurrency];
-      const result = price * rates[toCurrency];
-      setToPirce(result);
+      const price = value / ratesRef.current[fromCurrency];
+      const result = price * ratesRef.current[toCurrency];
+      setToPirce(result.toFixed(3));
       setFromPirce(value);
    };
 
    const onChangeToPrice = (value) => {
-      const result = (rates[fromCurrency] / rates[toCurrency]) * value;
-      setFromPirce(result);
+      const result =
+         (ratesRef.current[fromCurrency] / ratesRef.current[toCurrency]) * value;
+      setFromPirce(result.toFixed(3));
       setToPirce(value);
    };
 
